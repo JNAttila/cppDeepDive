@@ -16,42 +16,39 @@ protected:
   string tipus;
 
 public:
-  Sikidom(const string &tipus) : tipus(tipus)
-  {
-  }
-  virtual ~Sikidom() = default;
+  Sikidom(const string &tipus) : tipus(tipus) {}
   virtual unsigned kerulet() const = 0;
+  virtual ~Sikidom() = default;
   virtual void increase() = 0;
-  virtual Sikidom *copy() = 0;
+
   string keruletToString() const
   {
     return "A " + tipus + " kerulete " + to_string(kerulet()) + " egyseg.";
   }
+
+  void letIncrease()
+  {
+    increase();
+  }
 };
 
-// IDE DOLGOZZ!!!
 class Teglalap : public Sikidom
 {
 protected:
-  unsigned a, b;
+  unsigned a;
+  unsigned b;
 
 public:
-  Teglalap(unsigned a, unsigned b) : Sikidom("teglalap"), a(a), b(b) {}
+  Teglalap(unsigned a, unsigned b) : Sikidom("teglalap"), a(a), b(b) {};
 
   unsigned kerulet() const override
   {
-    return 2 * a + 2 * b;
+    return (2 * a + 2 * b);
   }
-
   void increase() override
   {
     a++;
     b++;
-  }
-
-  Sikidom *copy() override
-  {
-    return new TRACK_INFO Teglalap(*this);
   }
 };
 
@@ -62,22 +59,14 @@ public:
   {
     tipus = "negyzet";
   }
-
-  unsigned kerulet() const override
-  {
-    return 4 * a;
-  }
-
-  Sikidom *copy() override
-  {
-    return new TRACK_INFO Negyzet(*this);
-  }
 };
 
 class Haromszog : public Sikidom
 {
 protected:
-  unsigned a, b, c;
+  unsigned a;
+  unsigned b;
+  unsigned c;
 
 public:
   Haromszog(unsigned a, unsigned b, unsigned c) : Sikidom("haromszog"), a(a), b(b), c(c) {}
@@ -87,38 +76,57 @@ public:
     return a + b + c;
   }
 
-  // Inherited via Sikidom
   void increase() override
   {
     a++;
     b++;
     c++;
   }
-
-  Sikidom *copy() override
-  {
-    return new TRACK_INFO Haromszog(*this);
-  }
 };
+
 class Rajz
 {
-  vector<Sikidom *> elemek;
+  vector<const Sikidom *> sikidomok;
 
 public:
-  Rajz() = default;
-
   ~Rajz()
   {
-    for (Sikidom *s : elemek)
+    for (const Sikidom *s : sikidomok)
     {
       delete s;
     }
-    // for (int i = 0; i < elemek.size(); i++) {
-    //     delete &elemek[i];
-    // }
-    elemek.clear();
+    sikidomok.clear();
+  }
+
+  Rajz() = default;
+
+  // ha azt irja h lancolhato legyn akk mindig return *this? this* vs *this
+  Rajz &add(const Sikidom *s)
+  {
+    sikidomok.push_back(s);
+    return *this;
+  }
+
+  void dump(ostream &os)
+  {
+    for (const Sikidom *s : sikidomok)
+    {
+      os << s->keruletToString() << endl;
+    }
+  }
+
+  void increase()
+  {
+    for (const Sikidom *s : sikidomok)
+    {
+      cout << "ok1" << endl;
+      ((Sikidom *)s)->letIncrease();
+    }
   }
 };
+
+// IDE DOLGOZZ!!!
+
 // Ez alatt ne legyen mar feladat implementacio!
 #ifndef TEST_BIRO
 
