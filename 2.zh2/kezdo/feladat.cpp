@@ -47,6 +47,7 @@ public:
   {
     return (2 * a + 2 * b);
   }
+
   void increase() override
   {
     a++;
@@ -125,7 +126,6 @@ public:
   {
     for (const Sikidom *s : sikidomok)
     {
-      cout << "ok1" << endl;
       ((Sikidom *)s)->letIncrease();
     }
   }
@@ -167,9 +167,9 @@ int main()
     rajz.add(teglalap);
     rajz.add(negyzet).add(haromszog);
 
-    delete teglalap;
+    /*delete teglalap;
     delete negyzet;
-    delete haromszog;
+    delete haromszog;*/
   }
 
   {
