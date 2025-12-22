@@ -26,6 +26,11 @@ public:
     return "A " + tipus + " kerulete " + to_string(kerulet()) + " egyseg.";
   }
 
+  string getTipus() const
+  {
+    return tipus;
+  }
+
   void letIncrease()
   {
     increase();
@@ -41,7 +46,7 @@ protected:
 public:
   Teglalap(unsigned a, unsigned b) : Sikidom("teglalap"), a(a), b(b) {};
 
-  Teglalap(const Teglalap &o) : Sikidom(o.tipus), a(o.a), b(o.b) {}
+  Teglalap(const Teglalap *o) : Sikidom(o->tipus), a(o->a), b(o->b) {}
 
   unsigned kerulet() const override
   {
@@ -63,7 +68,10 @@ public:
     tipus = "negyzet";
   }
 
-  Negyzet(const Negyzet &o) : Teglalap(o.a, o.b) {}
+  Negyzet(const Negyzet *o) : Teglalap(o->a, o->b)
+  {
+    tipus = "negyzet";
+  }
 };
 
 class Haromszog : public Sikidom
@@ -76,7 +84,7 @@ protected:
 public:
   Haromszog(unsigned a, unsigned b, unsigned c) : Sikidom("haromszog"), a(a), b(b), c(c) {}
 
-  Haromszog(const Haromszog &o) : Sikidom(o.tipus), a(o.a), b(o.b), c(o.c) {}
+  Haromszog(const Haromszog *o) : Sikidom(o->tipus), a(o->a), b(o->b), c(o->c) {}
 
   unsigned kerulet() const override
   {
@@ -110,7 +118,21 @@ public:
   // ha azt irja h lancolhato legyn akk mindig return *this? this* vs *this
   Rajz &add(const Sikidom *s)
   {
-    sikidomok.push_back(s);
+    const Sikidom *store;
+    if (0 == s->getTipus().compare("teglalap"))
+    {
+      store = new const Teglalap((const Teglalap *)s);
+    }
+    else if (0 == s->getTipus().compare("negyzet"))
+    {
+      store = new const Negyzet((const Negyzet *)s);
+    }
+    else if (0 == s->getTipus().compare("haromszog"))
+    {
+      store = new const Haromszog((const Haromszog *)s);
+    }
+
+    sikidomok.push_back(store);
     return *this;
   }
 
@@ -167,9 +189,9 @@ int main()
     rajz.add(teglalap);
     rajz.add(negyzet).add(haromszog);
 
-    /*delete teglalap;
+    delete teglalap;
     delete negyzet;
-    delete haromszog;*/
+    delete haromszog;
   }
 
   {
