@@ -42,6 +42,10 @@
 *.dwo
 #### END GITIGNORE for C++
 
+#### BEGIN GITIGNORE for CLion
+.idea/*
+#### END GITIGNORE for CLion
+
 #### BEGIN GITIGNORE for VSCode
 .vscode/*
 !.vscode/settings.json
