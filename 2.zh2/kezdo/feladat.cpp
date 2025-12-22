@@ -41,6 +41,8 @@ protected:
 public:
   Teglalap(unsigned a, unsigned b) : Sikidom("teglalap"), a(a), b(b) {};
 
+  Teglalap(const Teglalap &o) : Sikidom(o.tipus), a(o.a), b(o.b) {}
+
   unsigned kerulet() const override
   {
     return (2 * a + 2 * b);
@@ -59,6 +61,8 @@ public:
   {
     tipus = "negyzet";
   }
+
+  Negyzet(const Negyzet &o) : Teglalap(o.a, o.b) {}
 };
 
 class Haromszog : public Sikidom
@@ -70,6 +74,8 @@ protected:
 
 public:
   Haromszog(unsigned a, unsigned b, unsigned c) : Sikidom("haromszog"), a(a), b(b), c(c) {}
+
+  Haromszog(const Haromszog &o) : Sikidom(o.tipus), a(o.a), b(o.b), c(o.c) {}
 
   unsigned kerulet() const override
   {
