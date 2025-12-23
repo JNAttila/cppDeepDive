@@ -121,34 +121,32 @@ public:
     const Sikidom *store;
     if (0 == s->getTipus().compare("teglalap"))
     {
-      store = new const Teglalap((const Teglalap *)s);
+      store = new const Teglalap(dynamic_cast<const Teglalap *>(s));
     }
     else if (0 == s->getTipus().compare("negyzet"))
     {
-      store = new const Negyzet((const Negyzet *)s);
+      store = new const Negyzet(dynamic_cast<const Negyzet *>(s));
     }
     else if (0 == s->getTipus().compare("haromszog"))
     {
-      store = new const Haromszog((const Haromszog *)s);
+      store = new const Haromszog(dynamic_cast<const Haromszog *>(s));
     }
 
     sikidomok.push_back(store);
     return *this;
   }
 
-  void dump(ostream &os)
-  {
+  void dump(ostream &os) const {
     for (const Sikidom *s : sikidomok)
     {
       os << s->keruletToString() << endl;
     }
   }
 
-  void increase()
-  {
+  void increase() const {
     for (const Sikidom *s : sikidomok)
     {
-      ((Sikidom *)s)->letIncrease();
+      const_cast<Sikidom *>(s)->letIncrease();
     }
   }
 };
