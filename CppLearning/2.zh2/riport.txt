@@ -1,0 +1,102 @@
+-------------------------------------------------------------------------------
+teszt01.cpp Teglalap/Negyzet/Haromszog CTORs and kerulet() (4) pont)
+-------------------------------------------------------------------------------
+Forditas: 2/2 pont
+Futas: 2/2 pont
+Teszteset vegleges pont: 4
+
+-------------------------------------------------------------------------------
+teszt02.cpp Rajz.add(..), required: Rajz CTOR, Teglalap/Negyzet/Haromszog CTORs (1) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt02.compile allomanyban olvashatok)
+Forditas: 0/1 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt03.cpp Rajz.add(..) does copy? (calls new), required: Rajz CTOR, Teglalap/Negyzet/Haromszog CTORs (2) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt03.compile allomanyban olvashatok)
+Forditas: 0/0 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt04.cpp Rajz.add(..).add(..), required: Rajz CTOR, Teglalap/Negyzet/Haromszog CTORs (1) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt04.compile allomanyban olvashatok)
+Forditas: 0/1 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt05.cpp Rajz.dump(..), required: Rajz CTOR, add(..), Teglalap/Negyzet/Haromszog CTORs, kerulet() (3) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt05.compile allomanyban olvashatok)
+Forditas: 0/1 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt06.cpp const Rajz.dump(..), required: Rajz CTOR, add(..), Teglalap/Negyzet/Haromszog CTORs, kerulet() (1) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt06.compile allomanyban olvashatok)
+Forditas: 0/1 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt07.cpp Rajz.add(..) copy check, required: Rajz CTOR, add(..), dump(), Teglalap/Negyzet/Haromszog CTORs, kerulet() (3) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt07.compile allomanyban olvashatok)
+Forditas: 0/0 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt08.cpp Rajz.add(..) and ~Rajz, delete checks, required: Rajz CTOR, add(..), Teglalap/Negyzet/Haromszog CTORs, kerulet() (2) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt08.compile allomanyban olvashatok)
+Forditas: 0/0 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt09.cpp Rajz.add(..) and ~Rajz, copy check with memory checks, required: Rajz CTOR, add(..), dump(), Teglalap/Negyzet/Haromszog CTORs, kerulet() (3) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt09.compile allomanyban olvashatok)
+Forditas: 0/0 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt10.cpp Rajz.increase(), required: Rajz CTOR, add(..), dump(), Teglalap/Negyzet/Haromszog CTORs, kerulet() (4) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt10.compile allomanyban olvashatok)
+Forditas: 0/2 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt11.cpp Rajz copy CTOR does call copy?, required: Rajz CTORs, add(..), Teglalap/Negyzet/Haromszog CTORs, kerulet() (2) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt11.compile allomanyban olvashatok)
+Forditas: 0/0 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt12.cpp Rajz copy CTOR with memory checks, required: Rajz CTOR, add(..), dump(), Teglalap/Negyzet/Haromszog CTORs, kerulet() (3) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt12.compile allomanyban olvashatok)
+Forditas: 0/1 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt13.cpp Rajz assignment operator removes previous elements with memory checks, required: Rajz CTOR, add(..), Teglalap/Negyzet/Haromszog CTORs, kerulet() (1) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt13.compile allomanyban olvashatok)
+Forditas: 0/0 pont
+Teszteset vegleges pont: 0
+
+-------------------------------------------------------------------------------
+teszt14.cpp Rajz assignment operator with memory checks, required: Rajz CTOR, add(..), dump(), Teglalap/Negyzet/Haromszog CTORs, kerulet() (5) pont)
+-------------------------------------------------------------------------------
+Forditas: HIBA! (Tovabbi informaciok a teszt14.compile allomanyban olvashatok)
+Forditas: 0/1 pont
+Teszteset vegleges pont: 0
+
+
+-------------------------------------------------------------------------------
+Teljes kiertekelesi ido: 15.655 sec
+Osszpontszam: 4 / 35
