@@ -154,6 +154,10 @@ public:
     GyerekKonyv(string cim, string szerzo, unsigned int ev,
                 unsigned int korhatar) : Konyv(cim, szerzo, ev), korhatar(korhatar) {}
 
+    GyerekKonyv(const GyerekKonyv &obj): Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), korhatar(obj.korhatar) {
+        like = obj.like;
+    }
+
     operator string() const override {
         return szerzo + ": " + cim + " (" + to_string(ev) + ", korhatar: " + to_string(korhatar) + "), lajk: " +
                to_string(like);
@@ -166,6 +170,9 @@ protected:
 public:
     TudomanyosKonyv(string cim, string szerzo, unsigned int ev, string tudomanyt) : Konyv(cim, szerzo, ev),
                                                                                     tudomanyt(tudomanyt) {}
+    TudomanyosKonyv(const TudomanyosKonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), tudomanyt(obj.tudomanyt) {
+        like = obj.like;
+    }
 
     Konyv &operator++() override {
         like += 2;
@@ -184,12 +191,24 @@ public:
     Ekonyv() : Konyv("", "", 0){};
 
     Ekonyv(Konyv *k) : Konyv(*k) {
-        p = new Konyv(*k);
+        if (dynamic_cast<GyerekKonyv*>(k)) {
+            p = new GyerekKonyv(*dynamic_cast<GyerekKonyv*>(k));
+        } else if (dynamic_cast<TudomanyosKonyv*>(k)) {
+            p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv*>(k));
+        } else {
+            p = new Konyv(*k);
+        }
     };
 
     Ekonyv(Ekonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()) {
         if (obj.p) {
-            p = new Konyv(*(obj.p));
+            if (dynamic_cast<GyerekKonyv*>(obj.p)) {
+                p = new GyerekKonyv(*dynamic_cast<GyerekKonyv*>(obj.p));
+            } else if (dynamic_cast<TudomanyosKonyv*>(obj.p)) {
+                p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv*>(obj.p));
+            } else {
+                p = new Konyv(*(obj.p));
+            }
         } else {
             p = nullptr;
         }
