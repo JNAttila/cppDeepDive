@@ -120,6 +120,7 @@ public:
 
     Konyv(string cim, string szerzo, unsigned int ev) : cim(cim), szerzo(szerzo), ev(ev), like(0) {};
 
+    Konyv(const Konyv &obj) : cim(obj.cim), szerzo(obj.szerzo), ev(obj.ev), like(obj.like) {}
 
     const string &getCim() const {
         return cim;
@@ -182,9 +183,17 @@ protected:
 public:
     Ekonyv() : Konyv("", "", 0){};
 
-    Ekonyv(Konyv *p) : Konyv(p->getCim(), p->getSzerzo(), p->getEv()), p(p) {};
+    Ekonyv(Konyv *k) : Konyv(*k) {
+        p = new Konyv(*k);
+    };
 
-    Ekonyv(Ekonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), p(obj.p) {};
+    Ekonyv(Ekonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()) {
+        if (obj.p) {
+            p = new Konyv(*(obj.p));
+        } else {
+            p = nullptr;
+        }
+    };
 
 
     operator std::string() const override {
