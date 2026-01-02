@@ -263,6 +263,18 @@ protected:
 public:
     Konyvespolc() = default;
 
+    Konyvespolc(const Konyvespolc &obj) {
+        for (Konyv *k: obj.konyvesp) {
+            if (dynamic_cast<GyerekKonyv *>(k)) {
+                this->konyvesp.push_back(new GyerekKonyv(*dynamic_cast<GyerekKonyv *>(k)));
+            } else if (dynamic_cast<TudomanyosKonyv *>(k)) {
+                this->konyvesp.push_back(new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv *>(k)));
+            } else {
+                this->konyvesp.push_back(new Konyv(*k));
+            }
+        }
+    }
+
     Konyvespolc &operator<<(Konyv *k) {
         if (k) {
             konyvesp.push_back(k);
@@ -270,7 +282,7 @@ public:
         return *this;//lancbafuzheto
     }
 
-    string getKonyvek() const {
+    [[nodiscard]] string getKonyvek() const {
         string lista;
         for (Konyv *k: konyvesp) {
             lista.append(k->operator string());//lista.append
@@ -288,15 +300,31 @@ public:
         return utolso;//miert kell visszaadniaz utolsot
     }
 
-      Konyv* operator [](size_t i) {//ezt honnan kellet vna tudnom //mi az h *&
-          if(i > konyvesp.size()){
-              throw out_of_range("i out of range");
-          }
-          return konyvesp[i];
+    Konyv* &operator [](size_t i) {//ezt honnan kellet vna tudnom //mi az h *&
+        if(i >= konyvesp.size()){
+            throw out_of_range("i out of range");
+        }
+        return konyvesp[i];
+    }
 
+    Konyvespolc &operator||(Konyvespolc &obj) {
+        Konyvespolc *target, *source;
 
-      }
+        if (obj.konyvesp.size() > konyvesp.size()) {
+            target = &obj;
+            source = this;
+        } else {
+            target = this;
+            source = &obj;
+        }
 
+        for (Konyv *k: source->konyvesp) {
+            target->konyvesp.push_back(k);
+        }
+        source->konyvesp.clear();
+
+        return *target;
+    }
 
     ~Konyvespolc() {
         for (Konyv *k: konyvesp) {
@@ -494,7 +522,7 @@ int main() {
     { // Ekonyv oroklodes, konstruktor, operator std::string, operator++, masolas, Memoriaszivargas
         // lasd 7. teszt
     }
-/*
+
 
     // 9
     { // Konyvespolc, konstruktor, operator<<, getKonyvek
@@ -778,7 +806,7 @@ int main() {
                   "Konyvespolc, konstruktor, operator<<, getKonyvek, masolo konstruktor");
     }
 
-
+/*
     // 18
     { // Konyvespolc, konstruktor, operator<<, getKonyvek, masolo konstruktor, Memoriaszivargas
         // lasd 17. teszt
