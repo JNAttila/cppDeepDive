@@ -118,19 +118,19 @@ public:
         like = l;
     }
 
-    Konyv(string cim, string szerzo, unsigned int ev) : cim(cim), szerzo(szerzo), ev(ev), like(0) {};
+    Konyv(string cim, string szerzo, const unsigned int ev) : cim(std::move(cim)), szerzo(std::move(szerzo)), ev(ev), like(0) {};
 
     Konyv(const Konyv &obj) : cim(obj.cim), szerzo(obj.szerzo), ev(obj.ev), like(obj.like) {}
 
-    const string &getCim() const {
+    [[nodiscard]] const string &getCim() const {
         return cim;
     }
 
-    const string &getSzerzo() const {
+    [[nodiscard]] const string &getSzerzo() const {
         return szerzo;
     }
 
-    unsigned int getEv() const {
+    [[nodiscard]] unsigned int getEv() const {
         return ev;
     }
 
@@ -140,7 +140,7 @@ public:
         return *this;
     }
 
-    virtual operator string() const {
+    explicit virtual operator string() const {
         return szerzo + ": " + cim + " (" + to_string(ev) + "), lajk: " + to_string(like);
     }
 
@@ -151,14 +151,14 @@ class GyerekKonyv : public Konyv {
 protected:
     unsigned int korhatar;
 public:
-    GyerekKonyv(string cim, string szerzo, unsigned int ev,
+    GyerekKonyv(const string &cim, const string &szerzo, unsigned int ev,
                 unsigned int korhatar) : Konyv(cim, szerzo, ev), korhatar(korhatar) {}
 
     GyerekKonyv(const GyerekKonyv &obj): Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), korhatar(obj.korhatar) {
         like = obj.like;
     }
 
-    operator string() const override {
+    explicit operator string() const override {
         return szerzo + ": " + cim + " (" + to_string(ev) + ", korhatar: " + to_string(korhatar) + "), lajk: " +
                to_string(like);
     }
@@ -168,8 +168,9 @@ class TudomanyosKonyv : public Konyv {
 protected:
     string tudomanyt;
 public:
-    TudomanyosKonyv(string cim, string szerzo, unsigned int ev, string tudomanyt) : Konyv(cim, szerzo, ev),
-                                                                                    tudomanyt(tudomanyt) {}
+    TudomanyosKonyv(const string &cim, const string &szerzo, unsigned int ev, string tudomanyt)
+        : Konyv(cim, szerzo, ev),tudomanyt(std::move(tudomanyt)) {}
+
     TudomanyosKonyv(const TudomanyosKonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), tudomanyt(obj.tudomanyt) {
         like = obj.like;
     }
@@ -179,7 +180,7 @@ public:
         return *this;
     }
 
-    operator std::string() const override {
+    explicit operator std::string() const override {
         return szerzo + ": " + cim + " (" + to_string(ev) + ", " + tudomanyt + "), lajk: " + to_string(like);
     }
 };
@@ -198,9 +199,9 @@ public:
         } else {
             p = new Konyv(*k);
         }
-    };
+    }
 
-    Ekonyv(Ekonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()) {
+    Ekonyv(const Ekonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()) {
         if (obj.p) {
             if (dynamic_cast<GyerekKonyv*>(obj.p)) {
                 p = new GyerekKonyv(*dynamic_cast<GyerekKonyv*>(obj.p));
@@ -212,7 +213,7 @@ public:
         } else {
             p = nullptr;
         }
-    };
+    }
 
     Ekonyv &operator=(const Ekonyv &obj) {
         this->cim = obj.getCim();
@@ -234,12 +235,11 @@ public:
         return *this;
     }
 
-    operator std::string() const override {
+    explicit operator std::string() const override {
         if (!p) {
             return "Az ekonyv ures";
-        } else {
-            return p->operator string();
         }
+        return p->operator string();
     }
 
     Ekonyv &operator++()
@@ -251,12 +251,10 @@ public:
         return *this;
     }
 
-
-    ~Ekonyv() {
+    ~Ekonyv() override {
         delete p;
         p = nullptr;
     }
-
 };
 
 
