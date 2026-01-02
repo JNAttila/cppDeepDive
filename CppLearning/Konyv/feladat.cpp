@@ -216,6 +216,9 @@ public:
     }
 
     Ekonyv &operator=(const Ekonyv &obj) {
+        if (this == &obj) // Guard self assignment
+            return *this;
+
         this->cim = obj.getCim();
         this->szerzo = obj.getSzerzo();
         this->ev = obj.getEv();
