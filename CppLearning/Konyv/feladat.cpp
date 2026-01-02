@@ -94,8 +94,6 @@ public:
 
 #if defined(MY_LIBRARY) || !defined(TEST_BIRO)
 
-// -----   algorithm  -----
-// ----- Ide dolgozz! -----
 
 
 
@@ -179,7 +177,7 @@ public:
         return *this;
     }
 
-    operator std::string() const override {
+    operator string() const override {
         return szerzo + ": " + cim + " (" + to_string(ev) + ", " + tudomanyt + "), lajk: " + to_string(like);
     }
 };
@@ -238,6 +236,49 @@ public:
         p = nullptr;
     }
 
+};
+
+class Konyvespolc{
+protected:
+    vector<Konyv*> konyvesp;
+public:
+    Konyvespolc() = default;
+    Konyvespolc& operator <<(Konyv *k) {
+    konyvesp.push_back(k);
+        return *this;//lancbafuzheto
+    }
+
+    string getKonyvek() const{
+        string lista;
+        for(Konyv* k : konyvesp){
+            lista+= k->operator string();
+            lista += "\n";
+        }
+        return lista;
+    }
+    Konyv* operator !(){ // a & nem lehet 0
+       if(konyvesp.empty()){
+           return nullptr;
+       }
+        Konyv* utolso = konyvesp.back();
+        konyvesp.pop_back();
+        return utolso;//miert kell visszaadniaz utolsot
+    }
+  /*  Konyv* operator [](size_t i) {//ezt honnan kellet vna tudnom //mi az h *&
+        if(i > sizeof(konyvesp)){
+          //  throw ut_of_range;
+        }
+
+
+
+    }*/
+
+
+    ~Konyvespolc(){
+        for(Konyv* k : konyvesp){
+            delete k;
+        }
+    }
 };
 
 
