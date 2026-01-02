@@ -214,6 +214,25 @@ public:
         }
     };
 
+    Ekonyv &operator=(const Ekonyv &obj) {
+        this->cim = obj.getCim();
+        this->szerzo = obj.getSzerzo();
+        this->ev = obj.getEv();
+
+        if (obj.p) {
+            if (dynamic_cast<GyerekKonyv*>(obj.p)) {
+                p = new GyerekKonyv(*dynamic_cast<GyerekKonyv*>(obj.p));
+            } else if (dynamic_cast<TudomanyosKonyv*>(obj.p)) {
+                p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv*>(obj.p));
+            } else {
+                p = new Konyv(*(obj.p));
+            }
+        } else {
+            p = nullptr;
+        }
+
+        return *this;
+    }
 
     operator std::string() const override {
         if (!p) {
@@ -416,6 +435,7 @@ int main() {
             Ekonyv et2;
             et2 = et;
             ++et2;
+            ++et2; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             result = et2.operator std::string();
             ASSERT_EQ(result, "B.S.: C++ felso fokon ... (2021, IT), lajk: 6", "Ekonyv masolas (ao) - TudomanyosKonyv");
         }
