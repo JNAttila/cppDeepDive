@@ -275,6 +275,26 @@ public:
         }
     }
 
+    Konyvespolc &operator=(const Konyvespolc &obj) {
+        for (const Konyv *k : this->konyvesp) {
+            delete k;
+            k = nullptr;
+        }
+        this->konyvesp.clear();
+
+        for (Konyv *k : obj.konyvesp) {
+            if (dynamic_cast<GyerekKonyv *>(k)) {
+                this->konyvesp.push_back(new GyerekKonyv(*dynamic_cast<GyerekKonyv *>(k)));
+            } else if (dynamic_cast<TudomanyosKonyv *>(k)) {
+                this->konyvesp.push_back(new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv *>(k)));
+            } else {
+                this->konyvesp.push_back(new Konyv(*k));
+            }
+        }
+
+        return *this;
+    }
+
     Konyvespolc &operator<<(Konyv *k) {
         if (k) {
             konyvesp.push_back(k);
@@ -806,7 +826,7 @@ int main() {
                   "Konyvespolc, konstruktor, operator<<, getKonyvek, masolo konstruktor");
     }
 
-/*
+
     // 18
     { // Konyvespolc, konstruktor, operator<<, getKonyvek, masolo konstruktor, Memoriaszivargas
         // lasd 17. teszt
@@ -854,7 +874,7 @@ int main() {
         // lasd 19. teszt
     }
 
-
+/*
     // 21
     { //findLibrary
         std::vector<Library> libs = {{"Somogyi01"},
