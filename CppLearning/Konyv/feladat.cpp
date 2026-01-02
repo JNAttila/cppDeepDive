@@ -251,7 +251,6 @@ public:
 #ifndef TEST_BIRO
 
 int main() {
-/*
     // 1
     { // Konyv konstruktor, operator std::string
         std::cout << std::endl << "Konyv konstruktor, operator std::string" << std::endl;
@@ -373,7 +372,6 @@ int main() {
         ASSERT_EQ(result, "B.S.: C++ felso fokon (2021, IT), lajk: 6",
                   "Ekonyv konstruktor, operator std::string - TudomanyosKonyv");
     }
-*/
 
     // 7
     { // Ekonyv oroklodes, konstruktor, operator std::string, operator++, masolas (cc, ao)
@@ -393,7 +391,6 @@ int main() {
         {
             Ekonyv ek2(ek);
             result = (++ek2).operator std::string();
-            // cout << "Test RESULT: " << result << endl;
             ASSERT_EQ(result, "Iro: Konyv (2022), lajk: 3", "Ekonyv masolas (cc)");
         }
         result = ek.operator std::string();
