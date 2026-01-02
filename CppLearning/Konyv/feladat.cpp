@@ -95,8 +95,6 @@ public:
 #if defined(MY_LIBRARY) || !defined(TEST_BIRO)
 
 
-
-
 #endif
 
 
@@ -116,7 +114,8 @@ public:
         like = l;
     }
 
-    Konyv(string cim, string szerzo, const unsigned int ev) : cim(std::move(cim)), szerzo(std::move(szerzo)), ev(ev), like(0) {};
+    Konyv(string cim, string szerzo, const unsigned int ev) : cim(std::move(cim)), szerzo(std::move(szerzo)), ev(ev),
+                                                              like(0) {};
 
     Konyv(const Konyv &obj) : cim(obj.cim), szerzo(obj.szerzo), ev(obj.ev), like(obj.like) {}
 
@@ -152,7 +151,7 @@ public:
     GyerekKonyv(const string &cim, const string &szerzo, unsigned int ev,
                 unsigned int korhatar) : Konyv(cim, szerzo, ev), korhatar(korhatar) {}
 
-    GyerekKonyv(const GyerekKonyv &obj): Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), korhatar(obj.korhatar) {
+    GyerekKonyv(const GyerekKonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), korhatar(obj.korhatar) {
         like = obj.like;
     }
 
@@ -167,9 +166,10 @@ protected:
     string tudomanyt;
 public:
     TudomanyosKonyv(const string &cim, const string &szerzo, unsigned int ev, string tudomanyt)
-        : Konyv(cim, szerzo, ev),tudomanyt(std::move(tudomanyt)) {}
+            : Konyv(cim, szerzo, ev), tudomanyt(std::move(tudomanyt)) {}
 
-    TudomanyosKonyv(const TudomanyosKonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()), tudomanyt(obj.tudomanyt) {
+    TudomanyosKonyv(const TudomanyosKonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()),
+                                                  tudomanyt(obj.tudomanyt) {
         like = obj.like;
     }
 
@@ -187,13 +187,13 @@ class Ekonyv : public Konyv {
 protected:
     Konyv *p = nullptr;
 public:
-    Ekonyv() : Konyv("", "", 0){};
+    Ekonyv() : Konyv("", "", 0) {};
 
     Ekonyv(Konyv *k) : Konyv(*k) {
-        if (dynamic_cast<GyerekKonyv*>(k)) {
-            p = new GyerekKonyv(*dynamic_cast<GyerekKonyv*>(k));
-        } else if (dynamic_cast<TudomanyosKonyv*>(k)) {
-            p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv*>(k));
+        if (dynamic_cast<GyerekKonyv *>(k)) {
+            p = new GyerekKonyv(*dynamic_cast<GyerekKonyv *>(k));
+        } else if (dynamic_cast<TudomanyosKonyv *>(k)) {
+            p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv *>(k));
         } else {
             p = new Konyv(*k);
         }
@@ -201,10 +201,10 @@ public:
 
     Ekonyv(const Ekonyv &obj) : Konyv(obj.getCim(), obj.getSzerzo(), obj.getEv()) {
         if (obj.p) {
-            if (dynamic_cast<GyerekKonyv*>(obj.p)) {
-                p = new GyerekKonyv(*dynamic_cast<GyerekKonyv*>(obj.p));
-            } else if (dynamic_cast<TudomanyosKonyv*>(obj.p)) {
-                p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv*>(obj.p));
+            if (dynamic_cast<GyerekKonyv *>(obj.p)) {
+                p = new GyerekKonyv(*dynamic_cast<GyerekKonyv *>(obj.p));
+            } else if (dynamic_cast<TudomanyosKonyv *>(obj.p)) {
+                p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv *>(obj.p));
             } else {
                 p = new Konyv(*(obj.p));
             }
@@ -222,10 +222,10 @@ public:
         this->ev = obj.getEv();
 
         if (obj.p) {
-            if (dynamic_cast<GyerekKonyv*>(obj.p)) {
-                p = new GyerekKonyv(*dynamic_cast<GyerekKonyv*>(obj.p));
-            } else if (dynamic_cast<TudomanyosKonyv*>(obj.p)) {
-                p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv*>(obj.p));
+            if (dynamic_cast<GyerekKonyv *>(obj.p)) {
+                p = new GyerekKonyv(*dynamic_cast<GyerekKonyv *>(obj.p));
+            } else if (dynamic_cast<TudomanyosKonyv *>(obj.p)) {
+                p = new TudomanyosKonyv(*dynamic_cast<TudomanyosKonyv *>(obj.p));
             } else {
                 p = new Konyv(*(obj.p));
             }
@@ -245,8 +245,7 @@ public:
 
     Ekonyv &operator++()
     override {
-        if (nullptr != p)
-        {
+        if (nullptr != p) {
             p->setLike(p->getLike() + 3);
         }
         return *this;
@@ -258,44 +257,49 @@ public:
     }
 };
 
-class Konyvespolc{
+class Konyvespolc {
 protected:
-    vector<Konyv*> konyvesp;
+    vector<Konyv *> konyvesp;
 public:
     Konyvespolc() = default;
-    Konyvespolc& operator <<(Konyv *k) {
-    konyvesp.push_back(k);
+
+    Konyvespolc &operator<<(Konyv *k) {
+        if (k) {
+            konyvesp.push_back(k);
+        }
         return *this;//lancbafuzheto
     }
 
-    string getKonyvek() const{
+    string getKonyvek() const {
         string lista;
-        for(Konyv* k : konyvesp){
-            lista+= k->operator string();
-            lista += "\n";
+        for (Konyv *k: konyvesp) {
+            lista.append(k->operator string());//lista.append
+            lista.append("\n");
         }
         return lista;
     }
-    Konyv* operator !(){ // a & nem lehet 0
-       if(konyvesp.empty()){
-           return nullptr;
-       }
-        Konyv* utolso = konyvesp.back();
+
+    Konyv *operator!() { // a & nem lehet 0
+        if (konyvesp.empty()) {
+            return nullptr;
+        }
+        Konyv *utolso = konyvesp.back();
         konyvesp.pop_back();
         return utolso;//miert kell visszaadniaz utolsot
     }
-  /*  Konyv* operator [](size_t i) {//ezt honnan kellet vna tudnom //mi az h *&
-        if(i > sizeof(konyvesp)){
-          //  throw ut_of_range;
-        }
+
+      Konyv* operator [](size_t i) {//ezt honnan kellet vna tudnom //mi az h *&
+          if(i > konyvesp.size()){
+              throw out_of_range("i out of range");
+          }
+          return konyvesp[i];
 
 
+      }
 
-    }*/
 
-
-    ~Konyvespolc(){
-        for(Konyv* k : konyvesp){
+    ~Konyvespolc() {
+        for (Konyv *k: konyvesp) {
             delete k;
         }
     }
