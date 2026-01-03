@@ -134,7 +134,6 @@ public:
         return ev;
     }
 
-    /*  unsigned int*/
     virtual Konyv &operator++() {
         like++;
         return *this;
@@ -262,7 +261,6 @@ public:
 
 class Konyvespolc {
     vector<Konyv*> polc;
-
 public:
     Konyvespolc() = default;
 
@@ -352,8 +350,8 @@ public:
         return *target;
     }
 
-    string getKonyvek() const {
-        string result = "";
+    [[nodiscard]] string getKonyvek() const {
+        string result;
         for (const Konyv *p : polc) {
             result.append(p->operator std::string());
             result.append("\n");
