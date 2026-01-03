@@ -266,6 +266,20 @@ class Konyvespolc {
 public:
     Konyvespolc() = default;
 
+    Konyvespolc(const Konyvespolc &obj) {
+        for (Konyv *k : obj.polc) {
+            if (const auto *gyk = dynamic_cast<GyerekKonyv*>(k)) {
+                polc.push_back(new GyerekKonyv(*gyk));
+            } else if (const auto *tk = dynamic_cast<TudomanyosKonyv*>(k)) {
+                polc.push_back(new TudomanyosKonyv(*tk));
+            } else if (const auto *ek = dynamic_cast<Ekonyv*>(k)) {
+                polc.push_back(new Ekonyv(*ek));
+            } else {
+                polc.push_back(new Konyv(*k));
+            }
+        }
+    }
+
     Konyvespolc &operator<<(Konyv *obj) {
         if (obj) {
             if (const auto *gyk = dynamic_cast<GyerekKonyv*>(obj)) {
@@ -281,6 +295,26 @@ public:
         return *this;
     }
 
+    Konyvespolc &operator=(const Konyvespolc &obj) {
+        for (const Konyv *k : this->polc) {
+            delete k;
+            k = nullptr;
+        }
+        this->polc.clear();
+
+        for (Konyv *k : obj.polc) {
+            if (auto *gyk = dynamic_cast<GyerekKonyv *>(k)) {
+                this->polc.push_back(new GyerekKonyv(*gyk));
+            } else if (auto *tk = dynamic_cast<TudomanyosKonyv *>(k)) {
+                this->polc.push_back(new TudomanyosKonyv(*tk));
+            } else {
+                this->polc.push_back(new Konyv(*k));
+            }
+        }
+
+        return *this;
+    }
+
     Konyv *operator!() {
         if (!polc.empty()) {
             Konyv *p = polc.back();
@@ -291,7 +325,7 @@ public:
         return nullptr;
     }
 
-    Konyv* &operator[](size_t ind) {
+    Konyv* &operator[](const size_t ind) {
         if (ind >= polc.size()) {
             throw out_of_range("The given index is invalid!");
         }
@@ -299,9 +333,28 @@ public:
         return polc[ind];
     }
 
+    Konyvespolc &operator||(Konyvespolc &obj) {
+        Konyvespolc *target, *source;
+
+        if (obj.polc.size() > polc.size()) {
+            target = &obj;
+            source = this;
+        } else {
+            target = this;
+            source = &obj;
+        }
+
+        for (Konyv *k: source->polc) {
+            target->polc.push_back(k);
+        }
+        source->polc.clear();
+
+        return *target;
+    }
+
     string getKonyvek() const {
         string result = "";
-        for (Konyv *p : polc) {
+        for (const Konyv *p : polc) {
             result.append(p->operator std::string());
             result.append("\n");
         }
@@ -309,7 +362,7 @@ public:
     }
 
     ~Konyvespolc() {
-        for (Konyv* p : polc) {
+        for (const Konyv* p : polc) {
             delete p;
             p = nullptr;
         }
@@ -618,7 +671,7 @@ int main() {
         delete utolso;
     }
 
-/*
+
     // 13
     { // Konyvespolc, konstruktor, operator<<, getKonyvek, operator!
 
@@ -836,7 +889,7 @@ int main() {
         // lasd 19. teszt
     }
 
-
+/*
     // 21
     { //findLibrary
         std::vector<Library> libs = {{"Somogyi01"},
