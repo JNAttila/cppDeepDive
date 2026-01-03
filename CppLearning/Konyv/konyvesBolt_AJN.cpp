@@ -281,6 +281,24 @@ public:
         return *this;
     }
 
+    Konyv *operator!() {
+        if (!polc.empty()) {
+            Konyv *p = polc.back();
+            polc.pop_back();
+            return p;
+        }
+
+        return nullptr;
+    }
+
+    Konyv* &operator[](size_t ind) {
+        if (ind >= polc.size()) {
+            throw out_of_range("The given index is invalid!");
+        }
+
+        return polc[ind];
+    }
+
     string getKonyvek() const {
         string result = "";
         for (Konyv *p : polc) {
@@ -511,7 +529,7 @@ int main() {
         })(p);
     }
 
-/*
+
     // 10
     { // Konyvespolc, konstruktor, operator<<, getKonyvek, operator[]
         std::cout << std::endl << "Konyvespolc, konstruktor, operator<<, getKonyvek, operator[]" << std::endl;
@@ -562,13 +580,13 @@ int main() {
         }
     }
 
-/*
+
     // 11
     { // Konyvespolc, konstruktor, operator<<, getKonyvek, operator[], Memoriaszivargas
         // lasd 10. teszt
     }
 
-/*
+
     // 12
     { // Konyvespolc, konstruktor, operator<<, getKonyvek, operator!
         std::cout << std::endl << "Konyvespolc, konstruktor, operator<<, getKonyvek, operator!" << std::endl;
@@ -600,7 +618,7 @@ int main() {
         delete utolso;
     }
 
-
+/*
     // 13
     { // Konyvespolc, konstruktor, operator<<, getKonyvek, operator!
 
