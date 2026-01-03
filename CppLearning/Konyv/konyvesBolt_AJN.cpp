@@ -268,15 +268,24 @@ public:
 
     Konyvespolc &operator<<(Konyv *obj) {
         if (obj) {
-            polc.push_back(obj);
+            if (const auto *gyk = dynamic_cast<GyerekKonyv*>(obj)) {
+                polc.push_back(new GyerekKonyv(*gyk));
+            } else if (const auto *tk = dynamic_cast<TudomanyosKonyv*>(obj)) {
+                polc.push_back(new TudomanyosKonyv(*tk));
+            } else if (const auto *ek = dynamic_cast<Ekonyv*>(obj)) {
+                polc.push_back(new Ekonyv(*ek));
+            } else {
+                polc.push_back(new Konyv(*obj));
+            }
         }
-        *this;
+        return *this;
     }
 
     string getKonyvek() const {
         string result = "";
         for (Konyv *p : polc) {
-            result.append(p->operator std::string()).append("\r\n");
+            result.append(p->operator std::string());
+            result.append("\n");
         }
         return result;
     }
