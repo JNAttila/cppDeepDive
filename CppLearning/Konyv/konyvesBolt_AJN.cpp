@@ -95,7 +95,7 @@ public:
 #if defined(MY_LIBRARY) || !defined(TEST_BIRO)
 
 bool findLibrary(const vector<Library> &lv, const string &s) {
-    auto it =
+    const auto it =
         test::find_if(lv.begin(), lv.end(),
         [&s](const Library &l) { return l.getId() == s; });
 
