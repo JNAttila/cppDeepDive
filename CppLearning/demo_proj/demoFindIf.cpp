@@ -11,11 +11,11 @@ void demoFunc1() {
                       [](int x) { return x % 2 == 0; });
 
     if (it != v.end()) {
-        cout << "The first even number is: " << *it << endl;
+        cout << "Demo_1 - the first even number is: " << *it << endl;
     }
 }
 
-bool size_bigger_then_5(const string& s) {
+bool size_bigger_then_5(const string &s) {
     return s.size() > 5;
 }
 
@@ -24,13 +24,24 @@ void demoFunc2() {
 
     auto it = find_if(words.begin(), words.end(), size_bigger_then_5);
 
-    cout << "The first possible word is: " << *it << endl;
+    cout << "Demo_2 - the first possible word is: " << *it << endl;
+}
+
+void demoFunc3() {
+    int arr[] = {2, 4, 7, 10};
+
+    auto it = find_if(std::begin(arr), std::end(arr),
+                      [](int x) { return x > 5; });
+
+    cout << "Demo_3 - the result is: " << *it << endl;
 }
 
 int main() {
     demoFunc1();
 
     demoFunc2();
+
+    demoFunc3();
 
     return 0;
 }
