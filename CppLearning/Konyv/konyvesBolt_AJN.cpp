@@ -94,9 +94,13 @@ public:
 
 #if defined(MY_LIBRARY) || !defined(TEST_BIRO)
 
-// -----   algorithm  -----
-// ----- Ide dolgozz! -----
+bool findLibrary(const vector<Library> &lv, const string &s) {
+    auto it =
+        test::find_if(lv.begin(), lv.end(),
+        [&s](const Library &l) { return l.getId() == s; });
 
+    return it != lv.end();
+}
 
 
 #endif
@@ -900,7 +904,7 @@ int main() {
         // lasd 19. teszt
     }
 
-/*
+
     // 21
     { //findLibrary
         std::vector<Library> libs = {{"Somogyi01"},
@@ -918,7 +922,7 @@ int main() {
         ASSERT_EQ(result, true, "Kereses letezo konyvtarra:");
 
     }
-
+/*
     // 22
     { // biggestLibrary
         std::vector<Library> libs = {{"Somogyi01"},
