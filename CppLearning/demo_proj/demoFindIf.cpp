@@ -36,12 +36,23 @@ void demoFunc3() {
     cout << "Demo_3 - the result is: " << *it << endl;
 }
 
+void demoFunc4(int param) {
+    int arr[] = {1, 4, 6, 9, 7};
+
+    auto it = find_if(std::begin(arr), std::end(arr),
+                      [param](int x) { return x > param; });
+
+    cout << "Demo_4 - the result is: " << *it << endl;
+}
+
 int main() {
     demoFunc1();
 
     demoFunc2();
 
     demoFunc3();
+
+    demoFunc4(6);
 
     return 0;
 }
