@@ -102,6 +102,16 @@ bool findLibrary(const vector<Library> &lv, const string &s) {
     return it != lv.end();
 }
 
+unsigned biggestLibrary(const vector<Library> &vl) {
+    auto it = test::max_element( vl.begin(), vl.end(),
+        [](Library l1, Library l2) {
+            return l1.getBooks().size() < l2.getBooks().size();
+        }
+    );
+
+    // cout << "__ Lib Name: " << it->getId() << endl;
+    return it->getBooks().size();
+}
 
 #endif
 
@@ -922,7 +932,7 @@ int main() {
         ASSERT_EQ(result, true, "Kereses letezo konyvtarra:");
 
     }
-/*
+
     // 22
     { // biggestLibrary
         std::vector<Library> libs = {{"Somogyi01"},
@@ -966,7 +976,7 @@ int main() {
         std::cout << "Minden konyvarban vannak konyvek (3,3,4,1):" << result << std::endl;
         ASSERT_EQ(result, 4, "Minden konyvarban vannak konyvek (3,3,4,1):");
     }
-    */
+
 }
 
 #endif

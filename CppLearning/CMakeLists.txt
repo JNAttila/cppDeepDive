@@ -10,6 +10,7 @@ add_executable(2zh3 2.zh3/kezdo/feladat_2zh_3.cpp)
 add_executable(Cukortarto Cukortaro/Cukortarto.cpp)
 add_executable(3zhGy 3.zhgyakorlo/kezdo/feladat_3zh_gy.cpp)
 add_executable(demoProj demo_proj/operatorSwap.cpp
-        demo_proj/demoFindIf.cpp)
+        demo_proj/demoFindIf.cpp
+        demo_proj/demoMaxElement.cpp)
 add_executable(Konyv Konyv/feladat.cpp
         Konyv/konyvesBolt_AJN.cpp)
