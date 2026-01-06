@@ -103,7 +103,7 @@ bool findLibrary(const vector<Library> &lv, const string &s) {
 }
 
 unsigned biggestLibrary(const vector<Library> &vl) {
-    auto it = test::max_element( vl.begin(), vl.end(),
+    const auto it = test::max_element( vl.begin(), vl.end(),
         [](Library l1, Library l2) {
             return l1.getBooks().size() < l2.getBooks().size();
         }
